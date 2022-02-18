@@ -1,6 +1,6 @@
 package com.create.singleton.factorymethod;
 
-public class WhiteshipFactory implements ShipFactory {
+public class WhiteshipFactory extends DefaultShipFactory {
 
     @Override
     public Ship createShip() {
