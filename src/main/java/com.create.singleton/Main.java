@@ -1,18 +1,17 @@
 package com.create.singleton;
 
-import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 public class Main {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        Settings settings = Settings.getInstance();
+    public static void main(String[] args) throws InvocationTargetException, InstantiationException, IllegalAccessException {
+        Settings settings = Settings.INSTANCE;
+
         Settings settings1 = null;
-
-        try (ObjectOutput out = new ObjectOutputStream(new FileOutputStream("settings.obj"))) {
-            out.writeObject(settings);
-        }
-
-        try (ObjectInput in = new ObjectInputStream(new FileInputStream("settings.obj"))) {
-            settings1 = (Settings) in.readObject();
+        Constructor<?>[] declaredConstructors = Settings.class.getDeclaredConstructors();
+        for (Constructor<?> constructor : declaredConstructors) {
+            constructor.setAccessible(true);
+            settings1 = (Settings)  constructor.newInstance("INSTANCE");
         }
 
         System.out.println(settings == settings1);
