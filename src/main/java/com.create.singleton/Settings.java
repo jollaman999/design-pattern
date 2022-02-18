@@ -1,6 +1,8 @@
 package com.create.singleton;
 
-public class Settings {
+import java.io.Serializable;
+
+public class Settings  implements Serializable {
     private Settings() {
 
     }
